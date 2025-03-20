@@ -4,34 +4,34 @@
       "name": "Smartphone X",
       "description": "Último modelo con cámara de alta resolución",
       "price": 599.99,
-      "image": "https://via.placeholder.com/200x200.png?text=Smartphone"
+      "image": "./images/smartphone-x.jpg"
     },
     {
       "id": 2,
       "name": "Laptop Pro",
       "description": "Potente ordenador portátil para profesionales",
       "price": 1299.99,
-      "image": "https://via.placeholder.com/200x200.png?text=Laptop"
+      "image": "./images/laptop-pro.jpg"
     },
     {
       "id": 3,
       "name": "Auriculares Bluetooth",
       "description": "Auriculares inalámbricos con cancelación de ruido",
       "price": 129.99,
-      "image": "https://via.placeholder.com/200x200.png?text=Auriculares"
+      "image": "./images/auriculares-bluetooth.jpg"
     },
     {
       "id": 4,
       "name": "Smartwatch Fit",
       "description": "Reloj inteligente con monitor de actividad física",
       "price": 199.99,
-      "image": "https://via.placeholder.com/200x200.png?text=Smartwatch"
+      "image": "./images/smartwatch-fit.jpg"
     },
     {
       "id": 5,
       "name": "Tablet Ultra",
       "description": "Tablet con pantalla de alta resolución para multimedia",
       "price": 349.99,
-      "image": "https://via.placeholder.com/200x200.png?text=Tablet"
+      "image": "./images/tablet-ultra.jpg"
     }
-  ]
+]

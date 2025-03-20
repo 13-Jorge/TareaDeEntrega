@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Hacer la petición para validar el login
-            makeRequest('GET', 'data/users.json')
+            // Cargar usuarios de localStorage o del archivo JSON
+            loadUsers()
                 .then(users => {
                     const user = users.find(u => u.username === username && u.password === password);
                     
@@ -38,6 +38,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Función para cargar usuarios desde localStorage o del archivo JSON
+function loadUsers() {
+    return new Promise((resolve, reject) => {
+        // Primero intentamos cargar desde localStorage
+        const storedUsers = localStorage.getItem('users');
+        if (storedUsers) {
+            resolve(JSON.parse(storedUsers));
+        } else {
+            // Si no hay usuarios en localStorage, intentamos cargar del archivo JSON
+            makeRequest('GET', 'data/users.json')
+                .then(users => {
+                    // Guardamos los usuarios cargados en localStorage para futuras referencias
+                    localStorage.setItem('users', JSON.stringify(users));
+                    resolve(users);
+                })
+                .catch(error => {
+                    console.error('Error al cargar usuarios:', error);
+                    // Si falla, devolvemos un array vacío
+                    resolve([]);
+                });
+        }
+    });
+}
 
 function displayMessage(element, message, type) {
     element.textContent = message;
