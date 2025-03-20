@@ -59,42 +59,35 @@ function addToCart(productId) {
         return;
     }
     
-    makeRequest('GET', 'data/carts.json')
-        .then(carts => {
-            let userCart = carts.find(cart => cart.userId === user.id);
-            
-            if (!userCart) {
-                // Crear nuevo carrito si no existe
-                userCart = {
-                    userId: user.id,
-                    items: []
-                };
-                carts.push(userCart);
-            }
-            
-            // Buscar si el producto ya está en el carrito
-            const existingItem = userCart.items.find(item => item.productId === productId);
-            
-            if (existingItem) {
-                // Incrementar cantidad si ya existe
-                existingItem.quantity += 1;
-            } else {
-                // Añadir nuevo item si no existe
-                userCart.items.push({
-                    productId: productId,
-                    quantity: 1
-                });
-            }
-            
-            // Guardar el carrito actualizado
-            return makeRequest('PUT', 'data/carts.json', carts);
-        })
-        .then(() => {
-            alert('Producto añadido al carrito');
-            updateCartCounter();
-        })
-        .catch(error => {
-            console.error('Error al añadir al carrito:', error);
-            alert('Error al añadir el producto al carrito');
+    // Obtener el carrito actual del localStorage o inicializar uno nuevo
+    let carts = JSON.parse(localStorage.getItem('carts')) || [];
+    let userCart = carts.find(cart => cart.userId === user.id);
+    
+    if (!userCart) {
+        // Crear nuevo carrito si no existe
+        userCart = {
+            userId: user.id,
+            items: []
+        };
+        carts.push(userCart);
+    }
+    
+    // Buscar si el producto ya está en el carrito
+    const existingItem = userCart.items.find(item => item.productId === productId);
+    
+    if (existingItem) {
+        // Incrementar cantidad si ya existe
+        existingItem.quantity += 1;
+    } else {
+        // Añadir nuevo item si no existe
+        userCart.items.push({
+            productId: productId,
+            quantity: 1
         });
+    }
+    
+    // Guardar el carrito actualizado en localStorage
+    localStorage.setItem('carts', JSON.stringify(carts));
+    alert('Producto añadido al carrito');
+    updateCartCounter();
 }

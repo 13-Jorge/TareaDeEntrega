@@ -72,19 +72,16 @@ function updateCartCounter() {
     const user = getCurrentUser();
     if (!user) return;
 
-    makeRequest('GET', 'data/carts.json')
-        .then(carts => {
-            const userCart = carts.find(cart => cart.userId === user.id);
-            const cartCounter = document.getElementById('cartCounter');
-            
-            if (userCart && cartCounter) {
-                const itemCount = userCart.items.reduce((total, item) => total + item.quantity, 0);
-                cartCounter.textContent = itemCount;
-            } else if (cartCounter) {
-                cartCounter.textContent = '0';
-            }
-        })
-        .catch(error => console.error('Error al actualizar contador del carrito:', error));
+    const carts = JSON.parse(localStorage.getItem('carts')) || [];
+    const userCart = carts.find(cart => cart.userId === user.id);
+    const cartCounter = document.getElementById('cartCounter');
+    
+    if (userCart && cartCounter) {
+        const itemCount = userCart.items.reduce((total, item) => total + item.quantity, 0);
+        cartCounter.textContent = itemCount;
+    } else if (cartCounter) {
+        cartCounter.textContent = '0';
+    }
 }
 
 // Inicializar la navegación al cargar la página
