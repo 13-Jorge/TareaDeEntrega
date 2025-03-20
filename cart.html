@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compra</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Tienda</div>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li id="cartLink"><a href="cart.html">Carrito <span id="cartCounter">0</span></a></li>
+                <li id="loginLink" style="display: none;"><a href="login.html">Iniciar Sesión</a></li>
+                <li id="registerLink" style="display: none;"><a href="register.html">Registrarse</a></li>
+                <li id="logoutLink"><a href="#" id="logout">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="cart-container">
+            <h1>Tu Carrito de Compra</h1>
+            <div id="cartMessage" class="message"></div>
+            <div id="cartItems">
+                <!-- Los items del carrito se cargarán aquí dinámicamente -->
+                <div class="loading">Cargando carrito...</div>
+            </div>
+            <div id="cartSummary" style="display: none;">
+                <div class="cart-total">
+                    <h3>Total: <span id="cartTotal">0.00</span> €</h3>
+                </div>
+                <button id="checkoutBtn">Finalizar Compra</button>
+            </div>
+            <div id="emptyCartMessage" style="display: none;">
+                <p>Tu carrito está vacío. <a href="index.html">Continuar comprando</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Tienda</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

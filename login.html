@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Tienda</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Tienda</div>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li id="registerLink"><a href="register.html">Registrarse</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="form-container">
+            <h1>Iniciar Sesión</h1>
+            <div id="loginMessage" class="message"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+            <p>¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Tienda</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

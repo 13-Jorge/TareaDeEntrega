@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online - AJAX</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Tienda</div>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li id="cartLink" style="display: none;"><a href="cart.html">Carrito <span id="cartCounter">0</span></a></li>
+                <li id="loginLink"><a href="login.html">Iniciar Sesión</a></li>
+                <li id="registerLink"><a href="register.html">Registrarse</a></li>
+                <li id="logoutLink" style="display: none;"><a href="#" id="logout">Cerrar Sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="welcome">
+            <h1>Bienvenido a Tienda</h1>
+            <p id="welcomeMessage">Explora nuestros productos</p>
+        </section>
+
+        <section class="products" id="productsContainer">
+            <!-- Los productos se cargarán aquí dinámicamente -->
+            <div class="loading">Cargando productos...</div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Tienda</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>
