@@ -58,35 +58,30 @@ function displayProducts(products) {
 
 function addToCart(productId) {
     const user = getCurrentUser();
-    
-    if (!user) {
-        // Redireccionar al login si no hay usuario
-        window.location.href = 'login.html';
-        return;
-    }
+    const cartId = user ? user.id : getAnonymousCartId();
     
     // Obtener el carrito actual del localStorage o inicializar uno nuevo
     let carts = JSON.parse(localStorage.getItem('carts')) || [];
-    let userCart = carts.find(cart => cart.userId === user.id);
+    let currentCart = carts.find(cart => cart.userId === cartId);
     
-    if (!userCart) {
+    if (!currentCart) {
         // Crear nuevo carrito si no existe
-        userCart = {
-            userId: user.id,
+        currentCart = {
+            userId: cartId,
             items: []
         };
-        carts.push(userCart);
+        carts.push(currentCart);
     }
     
     // Buscar si el producto ya está en el carrito
-    const existingItem = userCart.items.find(item => item.productId === productId);
+    const existingItem = currentCart.items.find(item => item.productId === productId);
     
     if (existingItem) {
         // Incrementar cantidad si ya existe
         existingItem.quantity += 1;
     } else {
         // Añadir nuevo item si no existe
-        userCart.items.push({
+        currentCart.items.push({
             productId: productId,
             quantity: 1
         });

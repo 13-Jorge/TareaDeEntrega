@@ -18,17 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function loadCart() {
     const user = getCurrentUser();
-    
-    if (!user) {
-        window.location.href = 'login.html';
-        return;
-    }
+    const cartId = user ? user.id : getAnonymousCartId();
     
     // Obtener el carrito desde localStorage
     const carts = JSON.parse(localStorage.getItem('carts')) || [];
-    const userCart = carts.find(cart => cart.userId === user.id);
+    const currentCart = carts.find(cart => cart.userId === cartId);
     
-    if (!userCart || userCart.items.length === 0) {
+    if (!currentCart || currentCart.items.length === 0) {
         showEmptyCart();
         return;
     }
@@ -36,7 +32,7 @@ function loadCart() {
     // Cargar información de productos
     makeRequest('GET', 'data/products.json')
         .then(products => {
-            displayCartItems(userCart.items, products);
+            displayCartItems(currentCart.items, products);
         })
         .catch(error => {
             console.error('Error al cargar productos:', error);
@@ -124,16 +120,16 @@ function addCartItemEvents() {
 
 function updateCartItemQuantity(productId, change) {
     const user = getCurrentUser();
-    if (!user) return;
+    const cartId = user ? user.id : getAnonymousCartId();
     
     // Obtener carrito del localStorage
     const carts = JSON.parse(localStorage.getItem('carts')) || [];
-    const userCart = carts.find(cart => cart.userId === user.id);
+    const currentCart = carts.find(cart => cart.userId === cartId);
     
-    if (!userCart) return;
+    if (!currentCart) return;
     
     // Encontrar el item en el carrito
-    const item = userCart.items.find(item => item.productId === productId);
+    const item = currentCart.items.find(item => item.productId === productId);
     
     if (item) {
         // Actualizar cantidad
@@ -141,7 +137,7 @@ function updateCartItemQuantity(productId, change) {
         
         // Si la cantidad es 0 o menos, eliminar el producto
         if (item.quantity <= 0) {
-            userCart.items = userCart.items.filter(i => i.productId !== productId);
+            currentCart.items = currentCart.items.filter(i => i.productId !== productId);
         }
         
         // Guardar el carrito actualizado
@@ -155,15 +151,15 @@ function updateCartItemQuantity(productId, change) {
 
 function removeCartItem(productId) {
     const user = getCurrentUser();
-    if (!user) return;
+    const cartId = user ? user.id : getAnonymousCartId();
     
     // Obtener carrito del localStorage
     const carts = JSON.parse(localStorage.getItem('carts')) || [];
-    const userCart = carts.find(cart => cart.userId === user.id);
+    const currentCart = carts.find(cart => cart.userId === cartId);
     
-    if (userCart) {
+    if (currentCart) {
         // Eliminar el producto del carrito
-        userCart.items = userCart.items.filter(item => item.productId !== productId);
+        currentCart.items = currentCart.items.filter(item => item.productId !== productId);
         
         // Guardar el carrito actualizado
         localStorage.setItem('carts', JSON.stringify(carts));
@@ -189,7 +185,20 @@ function showEmptyCart() {
 
 function checkout() {
     const user = getCurrentUser();
-    if (!user) return;
+    
+    if (!user) {
+        // Redirigir al login para completar la compra
+        displayMessage(document.getElementById('cartMessage'), 'Debes iniciar sesión para completar la compra', 'error');
+        
+        // Guardar la página actual para redireccionamiento después del login
+        localStorage.setItem('redirectAfterLogin', 'cart.html');
+        
+        // Redirigir a la página de login después de un tiempo
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 3000);
+        return;
+    }
     
     // Obtener carrito del localStorage
     const carts = JSON.parse(localStorage.getItem('carts')) || [];

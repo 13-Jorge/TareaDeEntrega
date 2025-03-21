@@ -33,5 +33,12 @@
       "description": "Tablet con pantalla de alta resolución para multimedia",
       "price": 349.99,
       "image": "./images/tablet-ultra.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Cámara Digital",
+      "description": "Cámara digital con lente intercambiable y alta resolución",
+      "price": 499.99,
+      "image": "./images/camara-digital.jpg"
     }
 ]

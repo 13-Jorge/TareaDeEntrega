@@ -21,11 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     if (user) {
                         // Login exitoso
-                        saveUser(user);
-                        displayMessage(loginMessage, 'Login exitoso. Redirigiendo...', 'success');
-                        setTimeout(() => {
-                            window.location.href = 'index.html';
-                        }, 1500);
+                        handleSuccessfulLogin(user);
                     } else {
                         // Login fallido
                         displayMessage(loginMessage, 'Usuario o contraseña incorrectos', 'error');
@@ -61,6 +57,19 @@ function loadUsers() {
                 });
         }
     });
+}
+
+function handleSuccessfulLogin(user) {
+    saveUser(user);
+    displayMessage(loginMessage, 'Login exitoso. Redirigiendo...', 'success');
+    
+    // Comprobar si hay redirección pendiente
+    const redirectUrl = localStorage.getItem('redirectAfterLogin') || 'index.html';
+    localStorage.removeItem('redirectAfterLogin');
+    
+    setTimeout(() => {
+        window.location.href = redirectUrl;
+    }, 1500);
 }
 
 function displayMessage(element, message, type) {
